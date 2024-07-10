@@ -1,88 +1,83 @@
 import axios from "axios";
 import { toast } from "react-hot-toast";
 
-// Set up default base URL and Authorization header for axios
 axios.defaults.baseURL = "https://api.themoviedb.org/3";
-axios.defaults.headers.common["Authorization"] = `Bearer ${import.meta.env.VITE_APP_API_READ_ACCESS_TOKEN}`;
+axios.defaults.headers.common["Authorization"] =
+  "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJkNzYyNDg5NTY5MGFjYmIzMDBlZmU4Y2E5OTU0ZDQ0ZSIsIm5iZiI6MTcyMDYwNzk4MC41MjU5ODMsInN1YiI6IjY2OGU1ZjI1OWQxYjU3MDMxZjVjMmNkNiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.pnoniB_nFYzXO_iPl_SBRUS--LvzztbEzIu-yjUdm9k";
 
-// Function to fetch trending movies
-export const getTrendingMovies = async () => {
-  try {
-    const response = await axios.get(`/trending/movie/week`, {
+export const getTrendingMovies = (onSuccess) => {
+  axios
+    .get("/trending/movie/week", {
       params: {
-        api_key: import.meta.env.VITE_APP_API_KEY,
-        language: "en-US"
-      }
+        language: "en-US",
+      },
+    })
+    .then((response) => {
+      onSuccess(response.data);
+    })
+    .catch((error) => {
+      toast.error(error.message);
     });
-    return response.data;
-  } catch (error) {
-    toast.error("Error fetching trending movies: " + error.message);
-    throw error;
-  }
 };
 
-// Function to search for movies
-export const searchMovie = async (query) => {
-  try {
-    const response = await axios.get(`/search/movie`, {
+export const searchMovie = (query, onSuccess) => {
+  axios
+    .get("/search/movie", {
       params: {
-        api_key: import.meta.env.VITE_APP_API_KEY,
         query,
         include_adult: false,
         language: "en-US",
       },
+    })
+    .then((response) => {
+      onSuccess(response.data);
+    })
+    .catch((error) => {
+      toast.error(error.message);
     });
-    return response.data;
-  } catch (error) {
-    toast.error("Error searching for movies: " + error.message);
-    throw error;
-  }
 };
 
-// Function to fetch movie details
-export const getMovieDetails = async (movieId) => {
-  try {
-    const response = await axios.get(`/movie/${movieId}`, {
+export const getMovieDetails = (movieId, onSuccess) => {
+  axios
+    .get(`movie/${movieId}`, {
       params: {
-        api_key: import.meta.env.VITE_APP_API_KEY,
-        language: "en-US"
-      }
+        language: "en-US",
+      },
+    })
+    .then((response) => {
+      onSuccess(response.data);
+    })
+    .catch((error) => {
+      toast.error(error.message);
     });
-    return response.data;
-  } catch (error) {
-    toast.error("Error fetching movie details: " + error.message);
-    throw error;
-  }
 };
 
-// Function to fetch movie credits
-export const getMovieCredits = async (movieId) => {
-  try {
-    const response = await axios.get(`/movie/${movieId}/credits`, {
+export const getMovieCredits = (movieId, onSuccess) => {
+  axios
+    .get(`movie/${movieId}/credits`, {
       params: {
-        api_key: import.meta.env.VITE_APP_API_KEY,
-        language: "en-US"
-      }
+        language: "en-US",
+      },
+    })
+    .then((response) => {
+      onSuccess(response.data);
+    })
+    .catch((error) => {
+      toast.error(error.message);
     });
-    return response.data;
-  } catch (error) {
-    toast.error("Error fetching movie credits: " + error.message);
-    throw error;
-  }
 };
 
-// Function to fetch movie reviews
-export const getMovieReviews = async (movieId) => {
-  try {
-    const response = await axios.get(`/movie/${movieId}/reviews`, {
+export const getMovieReviews = (movieId, onSuccess) => {
+  axios
+    .get(`movie/${movieId}/reviews`, {
       params: {
-        api_key: import.meta.env.VITE_APP_API_KEY,
-        language: "en-US"
-      }
+        language: "en-US",
+      },
+    })
+    .then((response) => {
+      onSuccess(response.data);
+    })
+    .catch((error) => {
+      toast.error(error.message);
     });
-    return response.data;
-  } catch (error) {
-    toast.error("Error fetching movie reviews: " + error.message);
-    throw error;
-  }
 };
